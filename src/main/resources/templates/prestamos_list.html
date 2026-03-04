@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Préstamos</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+
+<h1>Listado de Préstamos</h1>
+
+<a th:href="@{/menu}">⬅ Volver al menú</a> |
+<a th:href="@{/prestamos/new}">➕ Nuevo préstamo</a>
+
+<hr>
+
+<h3>Filtros</h3>
+
+<form method="get" th:action="@{/prestamos}">
+    <label>Socio:</label>
+    <select name="socioId">
+        <option value="">-- Todos --</option>
+        <option th:each="s : ${socios}"
+                th:value="${s.socioId}"
+                th:text="${s.nombre} + ' ' + ${s.apellidos}">
+        </option>
+    </select>
+
+    <label>Libro:</label>
+    <select name="libroId">
+        <option value="">-- Todos --</option>
+        <option th:each="l : ${libros}"
+                th:value="${l.libroId}"
+                th:text="${l.titulo}">
+        </option>
+    </select>
+
+    <label>
+        <input type="checkbox" name="activos" value="true">
+        Solo activos
+    </label>
+
+    <button type="submit">Filtrar</button>
+</form>
+
+<hr>
+
+<table border="1">
+    <tr>
+        <th>Socio</th>
+        <th>Libro</th>
+        <th>Inicio</th>
+        <th>Límite</th>
+        <th>Devolución</th>
+        <th>Acciones</th>
+    </tr>
+
+    <tr th:each="p : ${prestamos}">
+        <td th:text="${p.socio.nombre}">Socio</td>
+        <td th:text="${p.libro.titulo}">Libro</td>
+        <td th:text="${p.fechaPrestamo}">Inicio</td>
+        <td th:text="${p.fechaLimite}">Límite</td>
+        <td th:text="${p.fechaDevolucion} ?: '—'">Devolución</td>
+        <td>
+            <form th:if="${p.fechaDevolucion == null}"
+                  th:action="@{/prestamos/devolver}"
+                  method="post">
+                <input type="hidden" name="id" th:value="${p.prestamoId}">
+                <button type="submit">Devolver</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

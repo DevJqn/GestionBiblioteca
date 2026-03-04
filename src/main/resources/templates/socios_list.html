@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Socios</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+
+<h1>Socios</h1>
+
+<a th:href="@{/menu}">⬅ Menú</a> |
+<a th:href="@{/socios/new}">➕ Nuevo socio</a>
+
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Estado</th>
+    </tr>
+    <tr th:each="s : ${socios}">
+        <td th:text="${s.nombre} + ' ' + ${s.apellidos}"></td>
+        <td th:text="${s.email}"></td>
+        <td th:text="${s.estado}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
+

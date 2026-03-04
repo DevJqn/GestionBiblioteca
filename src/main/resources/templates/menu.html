@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistema de Gestión de Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <!-- AÑADIMOS SOLO ESTA PARTE: Header con info de usuario -->
+    <div class="header clearfix">
+        <div style="float: left;">
+            <h1>🏛️ Sistema de Gestión de Biblioteca</h1>
+        </div>
+        <div class="user-info">
+            <!-- Información del usuario autenticado -->
+            <span sec:authorize="isAuthenticated()">
+                👤 Bienvenido, <strong sec:authentication="name">Usuario</strong>
+                <span sec:authorize="hasRole('ADMIN')">(👑 Admin)</span>
+                <span sec:authorize="hasRole('USER') and !hasRole('ADMIN')">(📖 Usuario)</span>
+                <a th:href="@{/logout}">🚪 Cerrar Sesión</a>
+            </span>
+        </div>
+    </div>
+    
+    <!-- TU CONTENIDO ORIGINAL SE MANTIENE EXACTAMENTE IGUAL -->
+    <div class="container">
+        <p>Selecciona una opción del menú:</p>
+        
+        <div class="menu-grid">
+            <div class="menu-item">
+                <div class="icon">📚</div>
+                <a th:href="@{/libros}">Gestión de Libros</a>
+                <p><small>Ver, crear y editar libros</small></p>
+            </div>
+            
+            <div class="menu-item">
+                <div class="icon">👥</div>
+                <a th:href="@{/socios}">Gestión de Socios</a>
+                <p><small>Administrar socios de la biblioteca</small></p>
+            </div>
+            
+            <div class="menu-item">
+                <div class="icon">📋</div>
+                <a th:href="@{/prestamos}">Gestión de Préstamos</a>
+                <p><small>Préstamos y devoluciones</small></p>
+            </div>
+            
+            <div class="menu-item">
+                <div class="icon">📊</div>
+                <a th:href="@{/estadisticas}">Estadísticas</a>
+                <p><small>Reportes y estadísticas</small></p>
+            </div>
+        </div>
+
+        <hr style="margin-top: 30px;">
+        
+        <!-- API REST Links -->
+        <div style="background: #fff; padding: 15px; border-radius: 8px;">
+            <h3>🔗 Enlaces API REST</h3>
+            <p><strong>Swagger:</strong> <a href="/swagger-ui.html" target="_blank">Documentación API</a></p>
+            <p><small>Para usar la API necesitarás obtener un token JWT haciendo login en <code>/api/auth/login</code></small></p>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Socio</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<h1 th:text="${socio.socioId == null ? 'Nuevo Socio' : 'Editar Socio'}"></h1>
+<a th:href="@{/socios}">Volver al listado</a>
+<form th:action="@{/socios}" th:object="${socio}" method="post">
+    <input type="hidden" th:field="*{socioId}" />
+    <label>Nombre:</label>
+    <input type="text" th:field="*{nombre}" required />
+    <br/>
+    <label>Apellidos:</label>
+    <input type="text" th:field="*{apellidos}" required />
+    <br/>
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required />
+    <br/>
+    <label>Estado:</label>
+    <select th:field="*{estado}">
+        <option value="ACTIVO">ACTIVO</option>
+        <option value="SANCIONADO">SANCIONADO</option>
+    </select>
+    <br/>
+    <button type="submit">Guardar</button>
+</form>
+</body>
+</html>

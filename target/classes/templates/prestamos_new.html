@@ -1,0 +1,31 @@
+<h1>Nuevo Préstamo</h1>
+
+<form th:action="@{/prestamos}" th:object="${prestamo}" method="post">
+
+    <label>Socio:</label>
+    <select th:field="*{socioId}">
+        <option th:each="s : ${socios}"
+                th:value="${s.socioId}"
+                th:text="${s.nombre + ' ' + s.apellidos}">
+        </option>
+    </select>
+
+    <br>
+
+    <label>Libro:</label>
+    <select th:field="*{libroId}">
+        <option th:each="l : ${libros}"
+                th:value="${l.libroId}"
+                th:text="${l.titulo}">
+        </option>
+    </select>
+
+    <br><br>
+
+    <div th:if="${#fields.hasErrors('*')}" style="color:red;">
+        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+    </div>
+
+    <button type="submit">Guardar</button>
+</form>
+
